@@ -31,7 +31,7 @@ public interface PedidoService {
 
     PedidoModel salvar(PedidoModel pedido);
 
-    Optional<PedidoModel> obterPorUUID(String idPagamento);
+    Optional<PedidoModel> obterPorUUID(UUID idPagamento);
 
     List<PedidoModel> obterPedidosComPagamentoAguardando();
 

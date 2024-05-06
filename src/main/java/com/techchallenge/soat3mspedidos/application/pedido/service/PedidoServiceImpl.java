@@ -119,7 +119,8 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public Optional<PedidoModel> obterPorUUID(String idPagamento) {
+    public Optional<PedidoModel> obterPorUUID(UUID idPagamento) {
+
         return repository.findById(idPagamento);
     }
 
@@ -174,8 +175,14 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     private PedidoModel encontrarPedidoPorIdOuLancarErro(UUID id) {
-        return repository.findById(String.valueOf(id))
-                .orElseThrow(() -> new NegocioException(I18n.PEDIDO_INVALIDO));
+
+        Optional<PedidoModel> pedido =  repository.findById(id);
+
+        if (pedido.isPresent()) {
+            return pedido.get();
+        } else {
+            throw new NegocioException("Pedido não encontrado para o ID: " + id);
+        }
     }
 
     private void validarCriacaoPedido(PedidoModel pedido, ClienteModel cliente) {
