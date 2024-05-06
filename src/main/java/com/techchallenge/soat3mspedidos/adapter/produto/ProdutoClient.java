@@ -15,7 +15,7 @@ import java.util.UUID;
 public interface ProdutoClient {
 
     @GetMapping(value = "/{produtoId}", consumes = "application/json", produces = "application/json")
-    ResponseEntity<Object> getProduto(@PathVariable UUID produtoId);
+    ResponseEntity<ProdutoModel> getProduto(@PathVariable UUID produtoId);
 
     @GetMapping(value = "/produtos/", consumes = "application/json", produces = "application/json")
     ResponseEntity<List<ProdutoModel>> obterProdutosPorIDs(@RequestParam List<UUID> produtosIds);

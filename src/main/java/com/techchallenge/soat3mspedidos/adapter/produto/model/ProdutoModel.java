@@ -15,25 +15,13 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProdutoModel {
 
     private UUID id;
-
-    private TipoCategoria categoria;
-
-    private byte[] imagem;
-
     private String nome;
-
     private String descricao;
-
+    private String categoria;
     private BigDecimal preco;
-
-    private LocalDateTime dataHoraCriacao;
-
-    private LocalDateTime dataHoraAlteracao;
-
-    private Boolean status;
+    private String imagemBase64;
 
 }

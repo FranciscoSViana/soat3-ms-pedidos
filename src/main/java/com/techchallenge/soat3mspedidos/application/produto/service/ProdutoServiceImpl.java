@@ -28,12 +28,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 
         try {
 
-            //TODO ver essa parte
-            Object obj = produtoClient.getProduto(id).getBody();
+            ProdutoModel produto = produtoClient.getProduto(id).getBody();
 
-
-
-            return ProdutoModel.builder().categoria(TipoCategoria.LANCHE).build();
+            return produto;
 
         }catch(Exception err){
             throw new NegocioException(format("Erro ao obter produto: ",err.getMessage()));
