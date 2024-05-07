@@ -111,11 +111,17 @@ public class PedidoServiceImpl implements PedidoService {
 
         pagamento = pagamentoPort.criarPagamento(pagamento);
 
-        PedidoModel pedidoAtualizado = pedidoMapper.convertPagamentoToPedido(pagamento);
+        PedidoModel pedidoConvertido = pedidoMapper.convertPagamentoToPedido(pagamento);
 
-        repository.save(pedidoAtualizado);
+        pedidoConvertido.setId(pedido.getId());
 
-        return pedidoMapper.pedidoToPedidoRespose(pedidoAtualizado);
+        pedidoConvertido.setProdutos(pedido.getProdutos());
+
+        pedidoConvertido.setPreco(pedido.getPreco());
+
+        repository.save(pedidoConvertido);
+
+        return pedidoMapper.pedidoToPedidoRespose(pedidoConvertido);
     }
 
     @Override

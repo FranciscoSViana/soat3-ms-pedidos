@@ -29,13 +29,23 @@ public class PedidoMapper {
 
 
     public PagamentoModel convertPedidoToPagamento(PedidoModel pedido) {
-        return modelMapper.map(pedido, PagamentoModel.PagamentoModelBuilder.class)
-                .statusPagamento(StatusPagamento.AGUARDANDO_PAGAMENTO)
+        return PagamentoModel.builder()
+                .cliente(pedido.getCliente())
+                .statusPagamento(pedido.getStatusPagamento())
+                .id(pedido.getId())
+                .preco(pedido.getPreco())
+                .codigoPix(pedido.getCodigoPix())
                 .build();
     }
 
     public PedidoModel convertPagamentoToPedido(PagamentoModel pagamento) {
-        return modelMapper.map(pagamento, PedidoModel.PedidoModelBuilder.class)
+        return PedidoModel.builder()
+                .statusPedido(StatusPedido.RECEBIDO)
+                .idPagamentoMP(pagamento.getIdPagamentoMP())
+                .cliente(pagamento.getCliente())
+                .codigoPix(pagamento.getCodigoPix())
+                .statusPagamento(pagamento.getStatusPagamento())
+                .qrCode(pagamento.getQrCode())
                 .build();
     }
 
