@@ -4,10 +4,7 @@ import com.techchallenge.soat3mspedidos.adapter.cliente.model.ClienteModel;
 import com.techchallenge.soat3mspedidos.adapter.produto.model.ProdutoModel;
 import com.techchallenge.soat3mspedidos.domain.model.enumerate.StatusPagamento;
 import com.techchallenge.soat3mspedidos.domain.model.enumerate.StatusPedido;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,7 +13,8 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,8 +42,4 @@ public class PedidoModel {
 
     private List<ProdutoModel> produtos;
 
-    public void adicionarProdutoAoPedido(ProdutoModel produto) {
-        this.produtos.add(produto);
-        this.preco = this.preco.add(produto.getPreco());
-    }
 }
