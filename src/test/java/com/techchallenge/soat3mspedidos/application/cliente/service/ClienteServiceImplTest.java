@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ClienteServiceImplTest {
+class ClienteServiceImplTest {
 
     @Mock
     private ClienteClient clienteClient;
@@ -24,7 +24,7 @@ public class ClienteServiceImplTest {
     private ClienteServiceImpl clienteService;
 
     @Test
-    public void testBuscarPorCpf() {
+    void testBuscarPorCpf() {
         String cpf = "12345678900";
         ClienteModel clienteModelMock = new ClienteModel();
         clienteModelMock.setId(UUID.randomUUID());
@@ -39,7 +39,7 @@ public class ClienteServiceImplTest {
     }
 
     @Test
-    public void testBuscarPorId() {
+    void testBuscarPorId() {
         UUID id = UUID.randomUUID();
         ClienteModel clienteModelMock = new ClienteModel();
         clienteModelMock.setId(id);
