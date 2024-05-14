@@ -1,14 +1,11 @@
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
-  name: mongodb-config
-type: Opaque
-stringData:
-  MONGODB_HOST: "mongodb-hostname"
-  MONGODB_DATABASE: "database-name"
+  name: pedidos-config
+data:
+  MONGODB_HOST: "mongo-pedidos-service"
+  MONGODB_DATABASE: "pedidosdb"
   MONGODB_PORT: "27017"
-  MONGODB_USERNAME: "mongodb-username"
-  MONGODB_PASSWORD: "mongodb-password"
   GATEWAY_CLIENTES: "http://localhost:9090/v1/clientes"
   GATEWAY_PRODUTOS: "http://localhost:9090/v1/produtos"
   GATEWAY_PAGAMENTOS: "http://localhost:9090/v1/pagamentos"

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: soat3-ms-pedidos
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: soat3-ms-pedidos
@@ -17,15 +17,46 @@ spec:
           image: franciscosviana/soat3-ms-pedidos:v1
           ports:
             - containerPort: 8083
+          envFrom:
+            - configMapRef:
+                name: pedidos-config
+          env:
+            - name: MONGODB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: pedidos-config
+                  key: MONGODB_HOST
+            - name: MONGODB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: pedidos-config
+                  key: MONGODB_PORT
+            - name: MONGODB_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: pedidos-config
+                  key: MONGODB_DATABASE
+            - name: MONGODB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-pedidos-secret
+                  key: mongo-username
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-pedidos-secret
+                  key: mongo-password
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: soat3-ms-pedidos
+  name: soat3-ms-pedidos-service
 spec:
+  type: NodePort
   selector:
     app: soat3-ms-pedidos
   ports:
     - protocol: TCP
-      port: 80
+      port: 8083
       targetPort: 8083
+      nodePort: 32005
