@@ -12,7 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ClienteServiceImpl implements ClienteService {
 
-    private final ClienteClient clienteClient;
+    private ClienteClient clienteClient;
     @Override
     public ClienteModel buscarPorCpf(String cpf) {
         return clienteClient.buscarPorCpf(cpf).getBody();

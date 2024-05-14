@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-pedidos
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: mongo-pedidos
+      labels:
+        app: mongo-pedidos
+    spec:
+      containers:
+        - name: mongo-pedidos-container
+          image: mongo
+          ports:
+            - containerPort: 27017
+          envFrom:
+            - configMapRef:
+                name: produtos-config
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-pedidos-secret
+                  key: mongo-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-pedidos-secret
+                  key: mongo-password
+  selector:
+    matchLabels:
+      app: mongo-pedidos
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-pedidos-service
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017
+      nodePort: 32005
+  selector:
+    app: mongo-pedidos

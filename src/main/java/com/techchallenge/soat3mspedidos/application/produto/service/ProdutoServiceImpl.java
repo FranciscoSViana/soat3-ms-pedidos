@@ -20,7 +20,7 @@ import static java.lang.String.format;
 public class ProdutoServiceImpl implements ProdutoService {
 
 
-    private final ProdutoClient produtoClient;
+    private ProdutoClient produtoClient;
 
 
     @Override

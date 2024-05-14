@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soat3-ms-pedidos
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: soat3-ms-pedidos
+  template:
+    metadata:
+      labels:
+        app: soat3-ms-pedidos
+    spec:
+      containers:
+        - name: soat3-ms-pedidos
+          image: franciscosviana/soat3-ms-pedidos:v1
+          ports:
+            - containerPort: 8083
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: soat3-ms-pedidos
+spec:
+  selector:
+    app: soat3-ms-pedidos
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8083

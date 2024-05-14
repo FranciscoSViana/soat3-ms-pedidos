@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "produtoClient", url = "${produto.url}")
+@FeignClient(name = "produtoClient", url = "${produtos.url}")
 public interface ProdutoClient {
 
     @GetMapping(value = "/{produtoId}", consumes = "application/json", produces = "application/json")
