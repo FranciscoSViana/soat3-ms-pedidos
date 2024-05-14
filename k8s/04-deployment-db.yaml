@@ -27,6 +27,18 @@ spec:
                 secretKeyRef:
                   name: mongo-pedidos-secret
                   key: mongo-password
+            - name: MONGO_INITDB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-pedidos-secret
+                  key: mongo-database
+      volumes:
+        - name: init-script
+          configMap:
+            name: mongodb-configmap
+            items:
+              - key: mongo-init.js
+                path: mongo-init.js
   selector:
     matchLabels:
       app: mongo-pedidos
@@ -44,3 +56,15 @@ spec:
       nodePort: 32004
   selector:
     app: mongo-pedidos
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-configmap
+data:
+  mongo-init.js: |
+    db.createUser({
+        user: "Admin",
+        pwd: "Agos1918",
+        roles: [{ role: "readWrite", db: "admin" }]
+    });
