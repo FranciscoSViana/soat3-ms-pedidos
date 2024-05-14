@@ -6,6 +6,7 @@ data:
   MONGODB_HOST: "mongo-pedidos-service"
   MONGODB_DATABASE: "pedidosdb"
   MONGODB_PORT: "27017"
+  MONGO_URI: "mongodb://Admin:Agos1918@mongo-pedidos-service/pedidosdb?authSource=admin"
   GATEWAY_CLIENTES: "http://localhost:9090/v1/clientes"
   GATEWAY_PRODUTOS: "http://localhost:9090/v1/produtos"
   GATEWAY_PAGAMENTOS: "http://localhost:9090/v1/pagamentos"

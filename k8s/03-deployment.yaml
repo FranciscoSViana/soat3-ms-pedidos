@@ -21,6 +21,11 @@ spec:
             - configMapRef:
                 name: pedidos-config
           env:
+            - name: MONGO_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: pedidos-config
+                  key: MONGO_URI
             - name: MONGODB_HOST
               valueFrom:
                 configMapKeyRef:
