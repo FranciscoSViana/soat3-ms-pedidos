@@ -51,6 +51,21 @@ spec:
                 secretKeyRef:
                   name: mongo-pedidos-secret
                   key: mongo-password
+            - name: GATEWAY_CLIENTES
+              valueFrom:
+                configMapKeyRef:
+                  name: pedidos-config
+                  key: GATEWAY_CLIENTES
+            - name: GATEWAY_PRODUTOS
+              valueFrom:
+                configMapKeyRef:
+                  name: pedidos-config
+                  key: GATEWAY_PRODUTOS
+            - name: GATEWAY_PAGAMENTOS
+              valueFrom:
+                configMapKeyRef:
+                  name: pedidos-config
+                  key: GATEWAY_PAGAMENTOS
 ---
 apiVersion: v1
 kind: Service
@@ -64,4 +79,4 @@ spec:
     - protocol: TCP
       port: 8083
       targetPort: 8083
-      nodePort: 32005
+      nodePort: 32004

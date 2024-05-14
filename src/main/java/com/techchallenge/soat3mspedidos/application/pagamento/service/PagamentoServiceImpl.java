@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class PagamentoServiceImpl implements PagamentoService{
 
-    private PagamentoClient pagamentoClient;
+    private final PagamentoClient pagamentoClient;
 
     @Override
     public PagamentoModel criarPagamento(PagamentoModel request) {

@@ -53,7 +53,7 @@ spec:
     - protocol: TCP
       port: 27017
       targetPort: 27017
-      nodePort: 32004
+      nodePort: 32003
   selector:
     app: mongo-pedidos
 ---

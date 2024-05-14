@@ -19,8 +19,7 @@ import static java.lang.String.format;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class ProdutoServiceImpl implements ProdutoService {
 
-
-    private ProdutoClient produtoClient;
+    private final ProdutoClient produtoClient;
 
 
     @Override
