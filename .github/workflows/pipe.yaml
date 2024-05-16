@@ -80,7 +80,7 @@ jobs:
 
       - run: aws sts get-caller-identity
 
-      - run: aws eks update-kubeconfig --region us-east-1 --name soat3-eks-54ZivE2V
+      - run: aws eks update-kubeconfig --region us-east-1 --name soat3-eks-KspLnZlg
 
       - run: kubectl get svc
 
