@@ -2,6 +2,7 @@ name: SonarCloud
 on:
   push:
     branches:
+      - develop
       - main
   pull_request:
     types: [opened, synchronize, reopened]
@@ -9,6 +10,7 @@ jobs:
   build:
     name: Testes
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -40,6 +42,7 @@ jobs:
     name: Build Docker
     needs: build
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -57,3 +60,30 @@ jobs:
         run: docker build -t franciscosviana/soat3-ms-pedidos:v1 .
       - name: Push Image Docker
         run: docker push franciscosviana/soat3-ms-pedidos:v1
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        #if: github.event_name == 'pull_request'
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - run: aws sts get-caller-identity
+
+      - run: aws eks update-kubeconfig --region us-east-1 --name soat3-eks-KspLnZlg
+
+      - run: kubectl get svc
+
+      - name: Deploy to EKS
+        #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: kubectl apply -f k8s/
