@@ -9,6 +9,8 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PedidoRequest {
     private UUID id;
     private UUID cliente;
