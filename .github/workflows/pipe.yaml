@@ -10,6 +10,7 @@ jobs:
   build:
     name: Testes
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -62,7 +63,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build-docker
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'pull_request'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
