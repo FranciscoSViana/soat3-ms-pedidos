@@ -6,6 +6,7 @@ import com.techchallenge.soat3mspedidos.adapter.pedido.model.PedidoRequest;
 import com.techchallenge.soat3mspedidos.adapter.pedido.model.PedidoResponse;
 import com.techchallenge.soat3mspedidos.adapter.produto.model.ProdutoModel;
 import com.techchallenge.soat3mspedidos.application.cliente.service.ClienteService;
+import com.techchallenge.soat3mspedidos.application.pagamento.evento.PagamentoProducer;
 import com.techchallenge.soat3mspedidos.application.pagamento.service.PagamentoService;
 import com.techchallenge.soat3mspedidos.application.pedido.converter.PedidoMapper;
 import com.techchallenge.soat3mspedidos.application.pedido.exception.NegocioException;
@@ -34,7 +35,7 @@ public class PedidoServiceImpl implements PedidoService {
 
     private final ProdutoService produtoService;
 
-    private final PagamentoService pagamentoPort;
+    private final PagamentoProducer producer;
 
     private final PedidoMapper pedidoMapper;
 
@@ -109,8 +110,9 @@ public class PedidoServiceImpl implements PedidoService {
 
         PagamentoModel pagamento = pedidoMapper.convertPedidoToPagamento(pedido);
 
-        pagamento = pagamentoPort.criarPagamento(pagamento);
+        producer.solicitarPagamento(pagamento);
 
+        // observar este ponto
         PedidoModel pedidoConvertido = pedidoMapper.convertPagamentoToPedido(pagamento);
 
         pedidoConvertido.setId(pedido.getId());
