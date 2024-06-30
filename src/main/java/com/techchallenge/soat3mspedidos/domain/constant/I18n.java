@@ -16,5 +16,7 @@ public class I18n {
 
     public static final String TOPICO_CONFIRMACAO_PAGAMENTO = "topico_confirmacao_pagamento";
 
+    public static final String TOPICO_ERRO_PAGAMENTO = "topico_erro_pagamento";
+
     public static final String GRUPO_ID = "pagamentos_grupo_id";
 }

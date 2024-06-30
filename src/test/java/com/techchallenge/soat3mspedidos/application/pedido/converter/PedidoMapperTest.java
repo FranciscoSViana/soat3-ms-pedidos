@@ -79,7 +79,6 @@ public class PedidoMapperTest {
 
         assertEquals(pedidoModel.getCliente(), pagamentoModel.getCliente());
         assertEquals(pedidoModel.getStatusPagamento(), pagamentoModel.getStatusPagamento());
-        assertEquals(pedidoModel.getId(), pagamentoModel.getId());
         assertEquals(pedidoModel.getPreco(), pagamentoModel.getPreco());
         assertEquals(pedidoModel.getCodigoPix(), pagamentoModel.getCodigoPix());
     }

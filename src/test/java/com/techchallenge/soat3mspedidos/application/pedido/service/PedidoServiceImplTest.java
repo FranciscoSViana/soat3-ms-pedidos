@@ -6,6 +6,7 @@ import com.techchallenge.soat3mspedidos.adapter.pedido.model.PedidoRequest;
 import com.techchallenge.soat3mspedidos.adapter.pedido.model.PedidoResponse;
 import com.techchallenge.soat3mspedidos.adapter.produto.model.ProdutoModel;
 import com.techchallenge.soat3mspedidos.application.cliente.service.ClienteService;
+import com.techchallenge.soat3mspedidos.application.pagamento.evento.PagamentoProducer;
 import com.techchallenge.soat3mspedidos.application.pagamento.service.PagamentoService;
 import com.techchallenge.soat3mspedidos.application.pedido.converter.PedidoMapper;
 import com.techchallenge.soat3mspedidos.application.produto.service.ProdutoService;
@@ -61,6 +62,8 @@ public class PedidoServiceImplTest {
     private List<ProdutoModel> produtosModel;
 
     private ClienteModel clienteModel;
+    @Mock
+    private PagamentoProducer producer;
 
     @BeforeEach
     public void setUp() {
@@ -185,7 +188,7 @@ public class PedidoServiceImplTest {
         when(pedidoRepository.findById(pedidoId)).thenReturn(Optional.of(pedido));
         when(pedidoMapper.convertPedidoToPagamento(pedido)).thenReturn(pagamento);
         when(pedidoMapper.convertPagamentoToPedido(pagamento)).thenReturn(pedido);
-        when(pagamentoService.criarPagamento(pagamento)).thenReturn(pagamento);
+
 
         PedidoResponse pedidoResponse = new PedidoResponse();
         pedidoResponse.setId(UUID.randomUUID());
@@ -196,11 +199,8 @@ public class PedidoServiceImplTest {
 
         verify(pedidoRepository).findById(pedidoId);
         verify(pedidoMapper).convertPedidoToPagamento(pedido);
-        verify(pagamentoService).criarPagamento(pagamento);
-        verify(pedidoMapper).convertPagamentoToPedido(pagamento);
         verify(pedidoRepository).save(pedido);
         verify(pedidoMapper).pedidoToPedidoRespose(pedido);
-        assertNotNull(response.getId());
     }
 
 

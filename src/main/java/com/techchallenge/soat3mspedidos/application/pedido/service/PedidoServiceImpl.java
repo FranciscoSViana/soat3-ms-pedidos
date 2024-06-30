@@ -112,7 +112,6 @@ public class PedidoServiceImpl implements PedidoService {
 
         producer.solicitarPagamento(pagamento);
 
-        // observar este ponto
         PedidoModel pedidoConvertido = pedidoMapper.convertPagamentoToPedido(pagamento);
 
         pedidoConvertido.setId(pedido.getId());

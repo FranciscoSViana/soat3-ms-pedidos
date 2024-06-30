@@ -6,6 +6,7 @@ import com.techchallenge.soat3mspedidos.application.pagamento.service.PagamentoS
 import com.techchallenge.soat3mspedidos.application.pedido.exception.NegocioException;
 import com.techchallenge.soat3mspedidos.application.pedido.service.PedidoService;
 import com.techchallenge.soat3mspedidos.domain.model.PedidoModel;
+import com.techchallenge.soat3mspedidos.domain.model.enumerate.StatusPagamento;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,30 @@ public class PagamentoConsumer {
         }
     }
 
+    @KafkaListener(topics = TOPICO_ERRO_PAGAMENTO, groupId = GRUPO_ID)
+    public void consumeErro(@Payload String erroJson) {
+        try {
+            log.info("Recebido JSON de erro de pagamento: {}", erroJson);
+            String erroFormatado = formataPagamento(erroJson);
+            log.info("JSON formatado de erro de pagamento: {}", erroFormatado);
+            log.debug("Tentando desserializar para PagamentoModel");
+            PagamentoModel pagamento = objectMapper.readValue(erroFormatado, PagamentoModel.class);
+            log.debug("Desserialização bem-sucedida: {}", pagamento);
+            Optional<PedidoModel> pedido = pedidoService.obterPorUUID(pagamento.getIdPedido());
+            if (pedido.isPresent()) {
+                log.error("Erro no pagamento para o pedido: {}", pedido.get().getId());
+                PedidoModel pedidoComErro = pedido.get();
+                pedidoComErro.setStatusPagamento(StatusPagamento.ERRO);
+                pedidoService.salvar(pedidoComErro);
+            } else {
+                log.error("Pedido não encontrado para o erro de pagamento: {}", pagamento.getIdPedido());
+            }
+        } catch (Exception e) {
+            log.error("Erro ao consumir erro de pagamento: {}, JSON recebido: {}", e.getMessage(), erroJson, e);
+            throw new NegocioException(format("Erro ao consumir erro de pagamento: %s", e.getMessage()));
+        }
+    }
+
     private static String formataPagamento(String pagamentoJson) {
         return pagamentoJson
                 .replace("\\\"", "\"")
@@ -54,26 +79,5 @@ public class PagamentoConsumer {
                 .replace("\"{", "{")
                 .replace("}\"", "}");
     }
-   /* private static String formataPagamento(String pagamentoJson) {
-        return pagamentoJson.replace("\\\"", "\"").replace("\"{", "{").replace("}\"", "}");
-    }
-
-    */
-   /* private static String formataPagamento(String pagamentoJson) {
-        return pagamentoJson.replace("\\\"", "\"").replace("\"{", "{").replace("}\"", "}");
-    }
-
-    */
-    /*
-    private static String formataPagamento(String pagamentoJson) {
-        return pagamentoJson.replace("\\\\", "\\")
-                .replace("\\\"", "\"")
-                .replace("\\n", "")
-                .replace("\\t", "")
-                .replace("\\r", "");
-    }
-
-     */
-
 
 }
