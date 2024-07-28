@@ -26,6 +26,8 @@ public class PagamentoModel {
 
     private String idPagamentoMP;
 
+    private UUID idPedido;
+
     private byte[] qrCode;
 
 }

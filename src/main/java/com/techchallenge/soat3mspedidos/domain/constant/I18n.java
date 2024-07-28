@@ -11,4 +11,12 @@ public class I18n {
     public static final String CLIENTE_NAO_ENCONTRADO_COM_O_ID = "Cliente não encontrado com o ID: ";
     public static final String CLIENTE_NAO_ENCONTRADO_PARA_O_CPF = "Cliente não encontrado para o CPF: ";
     public static final String CLIENTE_JA_CADASTRADO_PARA_O_CPF = "Cliente já cadastrado para o CPF ";
+
+    public static final String TOPICO_SOLICITACAO_PAGAMENTO = "topico_solicitacao_pagamento";
+
+    public static final String TOPICO_CONFIRMACAO_PAGAMENTO = "topico_confirmacao_pagamento";
+
+    public static final String TOPICO_ERRO_PAGAMENTO = "topico_erro_pagamento";
+
+    public static final String GRUPO_ID = "pagamentos_grupo_id";
 }

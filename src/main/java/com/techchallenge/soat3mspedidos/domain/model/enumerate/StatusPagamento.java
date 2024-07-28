@@ -10,7 +10,9 @@ import static java.util.Arrays.stream;
 @AllArgsConstructor
 public enum StatusPagamento {
     PAGO("Pago"),
-    AGUARDANDO_PAGAMENTO("aguardandoPagamento");
+    AGUARDANDO_PAGAMENTO("aguardandoPagamento"),
+
+    ERRO("erroNoPix");
 
     private String descricao;
     public static StatusPagamento fromName(String name) {

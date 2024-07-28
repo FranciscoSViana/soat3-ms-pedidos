@@ -66,6 +66,10 @@ spec:
                 configMapKeyRef:
                   name: pedidos-config
                   key: GATEWAY_PAGAMENTOS
+            - name: SPRING_KAFKA_CONSUMER_BOOTSTRAP_SERVERS
+              value: "kafka-service:9092"
+            - name: SPRING_KAFKA_CONSUMER_GROUP_ID
+              value: "pagamentos_grupo_id"
 ---
 apiVersion: v1
 kind: Service
@@ -91,5 +95,5 @@ spec:
     app: soat3-ms-pedidos
   ports:
     - protocol: TCP
-      port: 8083
+      port: 80
       targetPort: 8083

@@ -32,7 +32,7 @@ public class PedidoMapper {
         return PagamentoModel.builder()
                 .cliente(pedido.getCliente())
                 .statusPagamento(pedido.getStatusPagamento())
-                .id(pedido.getId())
+                .idPedido(pedido.getId())
                 .preco(pedido.getPreco())
                 .codigoPix(pedido.getCodigoPix())
                 .build();
