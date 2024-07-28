@@ -48,7 +48,7 @@ jobs:
 
       - run: aws sts get-caller-identity
 
-      - run: aws eks update-kubeconfig --region us-east-1 --name soat3-eks-KspLnZlg
+      - run: aws eks update-kubeconfig --region us-east-1 --name soat3-eks-xFYMqNX3
 
       - run: kubectl get svc
 
